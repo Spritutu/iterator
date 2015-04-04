@@ -1,2 +1,7 @@
 *.tlog
 *.lastbuildstate
+*.sdf
+*.opensdf
+*.ipch
+*.idb
+*.exp
