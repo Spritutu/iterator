@@ -13,11 +13,6 @@ namespace iterator_test
 	{
 	public:
 		
-		enum Parameter: unsigned int
-		{
-			index_count = 100
-		};
-
 		std::vector<int> GetList(int count){
 			std::vector<int> v(count);
 			std::iota(v.begin(), v.end(), 1);
