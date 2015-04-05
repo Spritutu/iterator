@@ -1,22 +1,32 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
 #include <vector>
 #include <numeric>
-#include <iterator/iterator.h>
 
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+#include <iterator/grouped.h>
 
 namespace iterator_test
 {		
-	TEST_CLASS(UnitTest1)
+	TEST_CLASS(GroupedUnitTest)
 	{
 	public:
-		
+
 		std::vector<int> GetList(int count){
 			std::vector<int> v(count);
 			std::iota(v.begin(), v.end(), 1);
 			return v;
+		}
+
+		template<class List>
+		void ListTest(const List &expected, const List &result){
+			for (unsigned int i = 0; i < result.size(); ++i){
+				auto text = std::to_wstring(i) + L"is bad parameter";
+				Assert::AreEqual(expected.at(i), result.at(i), text.c_str());
+			}
+			Assert::AreEqual(expected.size(), result.size(), L"unexpected list size");
 		}
 
 		template<unsigned int N>
@@ -38,15 +48,6 @@ namespace iterator_test
 				++i;
 			}
 			Assert::AreEqual(group_count, i, L"unmatc group count");
-		}
-
-		template<class List>
-		void ListTest(const List &expected, const List &result){
-			for (unsigned int i = 0; i < result.size(); ++i){
-				auto text = std::to_wstring(i) + L"is bad parameter";
-				Assert::AreEqual(expected.at(i), result.at(i), text.c_str());
-			}
-			Assert::AreEqual(expected.size(), result.size(), L"unexpected list size");
 		}
 
 		TEST_METHOD(IndexIteratorTest)

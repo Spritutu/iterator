@@ -9,11 +9,11 @@ namespace iterator
 	template<class Type>
 	class Index{
 	public:
-		Index(const Type *ptr){
-			index_ = const_cast<Type*>(ptr);
+		Index(const Type *head){
+			index_ = const_cast<Type*>(head);
 		}
-		bool operator !=(const Index<Type> &foo) const{
-			return index_ != foo.index_;
+		bool operator !=(const Index<Type> &other) const{
+			return index_ != other.index_;
 		}
 		Type operator *() const{
 			return *index_;
