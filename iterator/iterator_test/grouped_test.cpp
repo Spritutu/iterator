@@ -1,6 +1,3 @@
-#include "stdafx.h"
-#include "CppUnitTest.h"
-
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #include <vector>
@@ -8,26 +5,13 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #include <iterator/grouped.h>
 
+#include "vector_test.h"
+
 namespace iterator_test
 {		
 	TEST_CLASS(GroupedUnitTest)
 	{
 	public:
-
-		std::vector<int> GetList(int count){
-			std::vector<int> v(count);
-			std::iota(v.begin(), v.end(), 1);
-			return v;
-		}
-
-		template<class List>
-		void ListTest(const List &expected, const List &result){
-			for (unsigned int i = 0; i < result.size(); ++i){
-				auto text = std::to_wstring(i) + L"is bad parameter";
-				Assert::AreEqual(expected.at(i), result.at(i), text.c_str());
-			}
-			Assert::AreEqual(expected.size(), result.size(), L"unexpected list size");
-		}
 
 		template<unsigned int N>
 		void LoopCountCheck(int list_size)
