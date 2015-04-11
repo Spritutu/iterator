@@ -54,7 +54,7 @@ namespace iterator_test
 			auto end = iterator::Index<int>(list.data() + list.size());
 
 			std::vector<int> result;
-			for (const auto &item : iterator::Range<int>(list.data(), 9)){
+			for (const auto &item : iterator::Range<int, 9>(list.data())){
 				result.push_back(item);
 			}
 			ListTest(list, result);

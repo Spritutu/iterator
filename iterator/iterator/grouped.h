@@ -25,22 +25,20 @@ namespace iterator
 		Type *index_ = nullptr;
 	};
 
-	template<class Type>
+	template<class Type, unsigned int N>
 	class Range{
 	public:
-		Range(const Type *begin, std::size_t size){
+		Range(const Type *begin){
 			begin_ = begin;
-			size_ = size;
 		}
 		Index<Type> begin() const{
 			return Index<Type>(begin_);
 		}
 		Index<Type> end() const{
-			return Index<Type>(begin_ + size_);
+			return Index<Type>(begin_ + N);
 		}
 	private:
 		const Type *begin_ = nullptr;
-		std::size_t size_ = 0;
 	};
 
 	template<class Type, unsigned int N>
@@ -52,8 +50,8 @@ namespace iterator
 		bool operator !=(const Offset<Type, N> &foo) const{
 			return index_ != foo.index_;
 		}
-		Range<Type> operator *() const{
-			return Range<Type>(index_, N);
+		Range<Type, N> operator *() const{
+			return Range<Type, N>(index_);
 		}
 		void operator ++(){
 			index_ += N;
