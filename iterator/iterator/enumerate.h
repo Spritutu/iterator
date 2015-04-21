@@ -1,40 +1,47 @@
 #pragma once
 
+#include <cstdint>
+
 namespace iterator
 {
 
 	template<class Type>
 	struct EnumPair{
-		unsigned int index_ = 0;
-		const Type *item_ = nullptr;
+		EnumPair(std::uint32_t index, Type &item):
+			index_(index),
+			item_(item)
+		{}
+		const std::uint32_t index_ = 0;
+		std::reference_wrapper<Type> item_;
 	};
 
 	template<class Type>
 	class EnumerateIterator{
 	public:
-		EnumerateIterator(const Type *head) :head_(head){
+		EnumerateIterator(Type *head) :head_(head){
 		}
 		bool operator !=(const EnumerateIterator<Type> &other) const{
 			return head_ + index_ != other.head_ + other.index_;
 		}
 		EnumPair<Type> operator *() const{
-			EnumPair<Type> pair;
-			pair.index_ = index_;
-			pair.item_ = head_ + index_;
+			EnumPair<Type> pair = {
+				index_,
+				std::ref(*(head_ + index_))
+			};
 			return pair;
 		}
 		void operator ++(){
 			++index_;
 		}
 	private:
-		const Type *head_ = nullptr;
+		Type *head_ = nullptr;
 		unsigned int index_ = 0;
 	};
 
 	template<class Type>
 	class EnumerateRange{
 	public:
-		EnumerateRange(const Type *begin, std::size_t size){
+		EnumerateRange(Type *begin, std::size_t size){
 			begin_ = begin;
 			size_ = size;
 		}
@@ -45,12 +52,12 @@ namespace iterator
 			return EnumerateIterator<Type>(begin_ + size_);
 		}
 	private:
-		const Type *begin_ = nullptr;
+		Type *begin_ = nullptr;
 		std::size_t size_ = 0;
 	};
 
 	template<class List>
-	auto Enumerate(const List &list)->EnumerateRange <typename List::value_type >{
+	auto Enumerate(List &list)->EnumerateRange <typename List::value_type >{
 		return EnumerateRange<typename List::value_type>(list.data(), list.size());
 	}
 }
