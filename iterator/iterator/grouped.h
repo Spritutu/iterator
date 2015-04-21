@@ -70,7 +70,7 @@ namespace iterator
 			if (size % N != 0){
 				throw;
 			}
-			size = size / N;
+			size /= N;
 
 			end_ = list.data() + size * N;
 		}
