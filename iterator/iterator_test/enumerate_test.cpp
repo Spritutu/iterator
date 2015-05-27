@@ -2,6 +2,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #include <vector>
 #include <numeric>
+#include <algorithm>
 
 #include <iterator/iterator.h>
 
@@ -35,8 +36,7 @@ namespace iterator_test
 		{
 			auto list = GetList(5);
 			for (auto &item : iterator::Enumerate(list)){
-				item.item_.get() = 3;
-				item.index_ = 0;
+				item.item_ = 3;
 			}
 
 			std::vector<int> result_item;
@@ -48,5 +48,15 @@ namespace iterator_test
 			ListTest(expected_item, result_item);
 		}
 
+		TEST_METHOD(EnumerateAlgorithmTest)
+		{
+			auto list = GetList(5);
+			auto enumerate = iterator::Enumerate(list);
+			auto find_iterator = std::find_if(enumerate.begin(), enumerate.end(), [](const iterator::EnumPair<int> &item){
+				return item.index_ == 3;
+			});
+			Assert::AreEqual((*find_iterator).index_, 3u, L"unexpected index");
+			Assert::AreEqual((*find_iterator).item_, 4, L"unexpected item value");
+		}
 	};
 }

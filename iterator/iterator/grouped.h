@@ -81,8 +81,8 @@ namespace iterator
 			return Offset<Type, N>(end_);
 		}
 	private:
-		const Type *begin_;
-		const Type *end_;
+		const Type *begin_ = nullptr;
+		const Type *end_ = nullptr;
 	};
 
 	template<unsigned int N, class Container>

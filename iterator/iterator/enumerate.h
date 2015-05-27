@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <iterator>
 
 namespace iterator
 {
@@ -12,17 +13,23 @@ namespace iterator
 			item_(item)
 		{}
 		const std::uint32_t index_ = 0;
-		std::reference_wrapper<Type> item_;
+		Type& item_;
 	};
 
 	template<class Type>
-	class EnumerateIterator{
+	class EnumerateIterator : public std::iterator<std::input_iterator_tag, Type>{
 	public:
 		EnumerateIterator(Type *head) :head_(head){
 		}
+
+		bool operator ==(const EnumerateIterator<Type> &other) const{
+			return !operator !=(other);
+		}
+
 		bool operator !=(const EnumerateIterator<Type> &other) const{
 			return head_ + index_ != other.head_ + other.index_;
 		}
+
 		EnumPair<Type> operator *() const{
 			EnumPair<Type> pair = {
 				index_,
@@ -30,6 +37,11 @@ namespace iterator
 			};
 			return pair;
 		}
+
+		EnumPair<Type> operator ->() const{
+			return operator *();
+		}
+
 		void operator ++(){
 			++index_;
 		}
