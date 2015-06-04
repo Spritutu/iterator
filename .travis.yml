@@ -5,4 +5,8 @@ befor_install:
     - sudo apt-get update
     - sudo apt-get install libgtest-dev
     - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
-script: "sh ./.travis_build.sh"
+script:
+    - export GTEST_LIBRARY=/usr/local/lib/libgtest.a
+    - export GTEST_MAIN_LIBRARY=/usr/local/lib/libgtest_main.a
+    - export GTEST_INCLUDE_DIRS=/usr/include
+    - sh ./.travis_build.sh
