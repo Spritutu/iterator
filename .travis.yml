@@ -9,6 +9,6 @@ script:
     - export GTEST_LIBRARY=/usr/local/lib/libgtest.a
     - export GTEST_MAIN_LIBRARY=/usr/local/lib/libgtest_main.a
     - export GTEST_INCLUDE_DIRS=/usr/include
-    - pwd /usr/include
-    - pwd /usr/include/gtest
+    - ls /usr/include
+    - ls /usr/include/gtest
     - sh ./.travis_build.sh
